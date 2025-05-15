@@ -1,0 +1,438 @@
+
+.home-container {
+    padding: 100px 20px 40px; 
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .home-container.dark-mode {
+    background-color: #1f1f1f;
+    color: #f5f5f5;
+  }
+  
+  .social-media {
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    padding-bottom: 20px;
+    margin: auto ;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .dark-mode .social-media {
+    border-bottom-color: #444;
+  }
+  
+  .connect-text {
+    font-size: 1.2rem;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .social-icon {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    transform: scale(1.1);
+  }
+  
+  /* News Grid Section */
+  .news-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 40px 0;
+  }
+  
+  .featured-news,
+  .news-stream {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .featured-article {
+    margin-top: 20px;
+  }
+  
+  .featured-article img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  /* News Stream */
+  .stream-header {
+    background-color: #3d4c63;
+    color: white;
+    padding: 15px;
+    font-size: 1.5rem;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .news-box {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background-color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .dark-mode .news-box {
+    background-color: #2b2b2b;
+    border-color: #444;
+  }
+  
+  .news-box-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 1rem;
+  }
+  
+  .news-title {
+    flex: 1;
+    font-weight: bold;
+  }
+  
+  .news-thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+  
+  .arrow-icon {
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  
+ 
+  .arrow-icon.down {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1'/%3E%3C/svg%3E");
+  }
+  
+  .arrow-icon.up {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z'/%3E%3C/svg%3E");
+  }
+
+  .news-expanded-content {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+  }
+  
+  .dark-mode .news-expanded-content {
+    border-top-color: #444;
+  }
+  
+  .cta-section {
+    display: flex;
+    gap: 2rem;
+    margin: 40px 0;
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  .dark-mode .cta-section {
+    background-color: #333;
+  }
+  
+  .email-signup,
+  .donate-section {
+    flex: 1;
+  }
+  
+  .signup-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .signup-form input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .signup-form button,
+  .donate-section button {
+    padding: 10px 20px;
+    background-color: #ffca28;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signup-form button:hover,
+  .donate-section button:hover {
+    background-color: #f4b400;
+  }
+  
+  .donate-section button {
+    background-color: #e57373;
+    margin-top: 15px;
+  }
+  
+  .donate-section button:hover {
+    background-color: #d84315;
+  }
+  
+  .news-carousel {
+    margin: 60px 0;
+    position: relative;
+    z-index: 0;
+  }
+  
+  .carousel-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  
+  .carousel-item img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  
+  .carousel-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .carousel-caption a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #000;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .carousel-caption a:hover {
+    background-color: #eeeeee;
+  }
+  
+  /* Loading & Error States */
+  .home-loading,
+  .home-error {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 1.2rem;
+  }
+  
+  .home-error {
+    color: #c0392b;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .news-grid,
+    .cta-section {
+      flex-direction: column;
+    }
+  
+    .carousel-item img {
+      height: 320px;
+    }
+  
+    .signup-form {
+      flex-direction: column;
+    }
+  
+    .signup-form input,
+    .signup-form button {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .carousel-item img {
+      height: 250px;
+    }
+  
+    .carousel-caption {
+      font-size: 0.9rem;
+      padding: 15px;
+    }
+  
+    .carousel-caption a {
+      padding: 8px 16px;
+    }
+  }
+  .carousel-bg {
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .overlay-content {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6); /* semi-transparent black */
+    color: white;
+    padding: 30px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .overlay-content h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .overlay-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .overlay-content button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .overlay-content button:hover {
+    background-color: #000000;
+    color: #ffffff;
+  }
+  .cta-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 60px; /* Increased gap between sections */
+    max-width: 1200px; /* Wider container */
+    margin: 80px auto;
+    padding: 0 20px;
+  }
+  
+  .email-signup, .donate-section {
+    flex: 1;
+    padding: 40px;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  .email-signup {
+    border-top: 4px solid #3b82f6;
+  }
+  
+  .donate-section {
+    border-top: 4px solid #10b981;
+  }
+  
+  .cta-section h2 {
+    font-size: 28px;
+    margin-bottom: 16px;
+    color: #1e293b;
+  }
+  
+  .cta-section h3 {
+    font-size: 22px;
+    margin-bottom: 16px;
+    color: #1e293b;
+  }
+  
+  .cta-section p {
+    font-size: 16px;
+    color: #64748b;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  
+  .signup-form {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .email-input {
+    flex: 1;
+    padding: 14px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .email-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+  
+  .signup-button, .donate-button {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .signup-button {
+    background-color: #3b82f6;
+    color: white;
+  }
+  
+  .signup-button:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+  }
+  
+  .donate-button {
+    background-color: #4b5757;
+    color: white;
+  }
+  
+  .donate-button:hover {
+    background-color: #4b5757;
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .cta-section {
+      flex-direction: column;
+      gap: 40px;
+    }
+    
+    .email-signup, .donate-section {
+      padding: 30px;
+    }
+  }

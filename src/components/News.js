@@ -1,136 +1,158 @@
-/// ----------------with infinite scrolling bar and changes in loading gif
-import React, { useState, useEffect } from 'react'
-// import PropTypes from 'prop-types'
-import Newsitem from './Newsitem'
-import PropTypes from 'prop-types' 
-import Spinner from './Spinner.js' 
+
+import React, { useState, useEffect } from 'react';
+import Newsitem from './Newsitem';
+import Spinner from './Spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
-const News=(props)=> {
-  const [articles,setArticles]=useState([])
-  const [page,setPage]=useState(1)
-  const [loading,setLoading]=useState(true)
-  const [totalResults,setTotalResults]=useState(0)  
-  const capitalize=(str)=>{
-     return str.charAt(0).toUpperCase()+str.slice(1)
-  }
+import PropTypes from 'prop-types';
+import './News.css';
 
-  const updatepage=async()=>{
-    props.setProgress(10);
-    let url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apikey}&page=${page}&pageSize=${props.pagesize}`
-    setLoading(true)
-    
-     document.title=`${capitalize(props.category)}-NewsPulse`
-    let data =await fetch(url);
-    props.setProgress(30);
-    let response= await data.json();
-    props.setProgress(70);  
-    setArticles(response.articles)
-    setLoading(false)     
-    setTotalResults(response.totalResults) 
-    setPage(page)  
-    
-    props.setProgress(100);
-  }
-  useEffect(()=>{
-    updatepage(); 
-  },[])
+const News = (props) => {
+  const [articles, setArticles] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [totalResults, setTotalResults] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [error, setError] = useState(null);
 
-  const fetchMoreData=async()=>{
-    let url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apikey}&page=${page+1}&pageSize=${props.pagesize}`
-    setPage(page+1)
-    let data =await fetch(url);
-    // props.setProgress(30);
-    let response= await data.json();
-    // props.setProgress(50);  
-    setArticles(articles.concat(response.articles))     
-    setTotalResults(response.totalResults) 
-     
-    
-    
-    props.setProgress(100);
-  }
-    // handleprev=async()=>{
-    //   // let url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=2663ed632c7f4b6a8d2f106b9b6d6c82&page=${state.page-1}&pageSize=${props.pagesize}`
-    //   // let data =await fetch(url);
-    //   // let response= await data.json();
-    //   // setState({
-    //   // articles:response.articles,
-    //   // page:state.page-1
-    //   // })
-    //   setState({
-    //     page:state.page-1
-    //   })
-    //   updatepage();
-    // }
-    // handlenext=async()=>{
-    //   // if(state.page<Math.ceil(state.totalResults/12)){
-    //   // let url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=2663ed632c7f4b6a8d2f106b9b6d6c82&page=${state.page+1}&pageSize=${props.pagesize}`
-    //   // let data =await fetch(url);
-    //   // let response= await data.json();
-    //   // setState({
-    //   // articles:response.articles,
-    //   // page:state.page+1
-    //   // })}
-    //   // else{
-    //   //  let btn =document.querySelector(".myclass")
-    //   //   btn.disabled=true
-    //   // } 
-    //   if(state.page<Math.ceil(state.totalResults/12))
-    //     {
-    //       setState({
-    //         page:state.page+1
-    //       })
-    //       updatepage();
-    //     }
-    //     else{
-    //       let btn =document.querySelector(".myclass")
-    //       btn.disabled=true
-    //     }
+  const capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
 
-    // } 
+  const updateNews = async () => {
+    // Don't make request if we're already loading or have no more articles
+    if (loading || !hasMore) return;
 
-    return (
-      <>      
+    try {
+      setLoading(true);
+      props.setProgress(10);
+      setError(null);
       
-      {/* <div style={{border:'solid grey 3px',margin:'30px',borderRadius:'10px'}}> */}
-      <div>
-      <h2  className={`${props.mode ==='dark'?'text-white':' text-dark'}`}  style={{textAlign:'center',margin:'60px',marginBottom:'30px'}}>NewsPulse-Top {capitalize(props.category)} Headlines</h2>
-     { loading && <Spinner mode={props.mode}/>}
-     
-      <div style={{ margin:'auto',width:'80%'}}>
-      <div   style={{display:'grid', gridTemplateColumns:'repeat(3,1fr)', justifyItems: 'center',alignItems:'center'}}>
-          {/* display:'grid', gridTemplateColumns:'3',gridTemplateRows:'auto' */}
-          {articles && !loading && articles.map((element)=>{
-                return <div  className={`newsshowing `} >
-                <Newsitem mode={props.mode} key={element.url} title={element.title?element.title.slice(0,50):""} desc={element.description?element.description.slice(0,120):""} imageurl={element.url?element.urlToImage:"https://www.hindustantimes.com/ht-img/img/2024/06/10/550x309/US-HUNTER-BIDEN-GUN-TRIAL-CONTINUES-IN-DELAWARE-10_1718034063663_1718034099459.jpg"} newsurl={element.url} 
-                author={element.author?element.author:"unknown"} time={element.publishedAt?(element.publishedAt):'unknown'} source={element.source.name} ></Newsitem>
-                </div>
-          })}      
-      </div>  
-      </div>
+      document.title = `${capitalize(props.category)} - NewsPulse`;
+      const url = `https://api.mediastack.com/v1/news?access_key=${props.apikey}&keywords=${props.category}&countries=${props.country}&limit=${props.pagesize}&offset=${(page - 1) * props.pagesize}`;
+      
+      const response = await fetch(url);
+      props.setProgress(30);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP error! status: ${response.status}, ${errorText}`);
+      }
+      
+      const data = await response.json();
+      props.setProgress(70);
+      
+      if (data.error) {
+        throw new Error(data.error.message || 'Unknown API error');
+      }
+      
+      if (data.data && data.data.length > 0) {
+        setArticles(prevArticles => 
+          page === 1 ? data.data : [...prevArticles, ...data.data]
+        );
+        setTotalResults(data.pagination?.total || 0);
+        setHasMore(page * props.pagesize < (data.pagination?.total || 0));
+      } else {
+        setHasMore(false);
+        if (page === 1) setArticles([]);
+      }
+      
+      props.setProgress(100);
+    } catch (error) {
+      console.error("Error fetching news:", error);
+      // Only show error if we have no articles
+      if (articles.length === 0) {
+        setError(error.message);
+      }
+      setHasMore(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    updateNews();
+  }, [page, props.country, props.category]);
+
+  const fetchMoreData = () => {
+    if (!loading && hasMore) {
+      setPage(prevPage => prevPage + 1);
+    }
+  };
+
+  return (
+    <div className={`news-container ${props.mode === 'dark' ? 'dark-mode' : ''}`}>
+      <h1 className={`news-heading ${props.mode === 'dark' ? 'text-white' : 'text-dark'}`}>
+        NewsPulse - Top {capitalize(props.category)} Headlines
+      </h1>
+      
+      {error && articles.length === 0 && (
+        <div className={`error-message ${props.mode === 'dark' ? 'dark-error' : ''}`}>
+          {error.includes('rate_limit_reached') 
+            ? "We've hit our API limit. Please try again later." 
+            : error}
+        </div>
+      )}
+      
+      {articles.length === 0 && !error && loading && (
+        <div className="spinner-container">
+          <Spinner mode={props.mode} />
+        </div>
+      )}
       
       <InfiniteScroll
-      dataLength={articles.length}
-      next={fetchMoreData}
-      hasMore={articles.length!=totalResults}                                                                                                                                                                                                                                                                    
-      loader={<Spinner mode={props.mode}/>}
-    />
+        dataLength={articles.length}
+        next={fetchMoreData}
+        hasMore={hasMore}
+        loader={articles.length > 0 && <div className="spinner-container"><Spinner mode={props.mode} /></div>}
+        endMessage={
+          articles.length > 0 && (
+            <p className={`end-message ${props.mode === 'dark' ? 'text-white' : 'text-dark'}`}>
+              <b>You've reached the end of today's news</b>
+            </p>
+          )
+        }
+      >
+        <div className="news-grid">
+          {articles.map((element, index) => (
+            <Newsitem
+              key={`${element.url}-${index}`}
+              mode={props.mode}
+              title={element.title}
+              desc={element.description}
+              imageurl={element.image}
+              newsurl={element.url}
+              author={element.author}
+              time={element.publishedAt}
+              source={element.source}
+            />
+          ))}
+        </div>
+      </InfiniteScroll>
+      
+      {articles.length === 0 && !loading && !error && (
+        <div className={`no-articles ${props.mode === 'dark' ? 'dark-no-articles' : ''}`}>
+          <h3>No articles found for this category</h3>
+          <p>Try refreshing or checking back later for updates</p>
+        </div>
+      )}
     </div>
-    </>
+  );
+};
 
-    )
-  }
+News.defaultProps = {
+  pagesize: 12,
+  country: 'us',
+  category: 'general',
+  totalResults: 0
+};
 
+News.propTypes = {
+  country: PropTypes.string,
+  pagesize: PropTypes.number,
+  category: PropTypes.string,
+  apikey: PropTypes.string.isRequired,
+  mode: PropTypes.string,
+  setProgress: PropTypes.func
+};
 
-News.defaultProps={
-  pagesize:5,
-  country:'in',
-  category:'general',
-  totalResults:0
-}
-News.propTypes={
-  country:PropTypes.string,
-  pagesize:PropTypes.number,
-  category:PropTypes.string
-}
 export default News;

@@ -1,0 +1,149 @@
+
+.news-item {
+    width: 100%;
+    max-width: 380px;
+    margin: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.news-item.dark-mode {
+    background: #2d3748;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.news-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.dark-mode .news-item:hover {
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+}
+
+.news-item-image-container {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+.news-item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.news-item:hover .news-item-image {
+    transform: scale(1.03);
+}
+
+.news-item-source {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 1;
+}
+
+.news-item-content {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.news-item-title {
+    margin: 0 0 15px 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #2d3748;
+    min-height: 60px;
+}
+
+.dark-mode .news-item-title {
+    color: #f7fafc;
+}
+
+.news-item-desc {
+    margin: 0 0 20px 0;
+    color: #4a5568;
+    line-height: 1.5;
+    font-size: 1rem;
+    flex-grow: 1;
+}
+
+.dark-mode .news-item-desc {
+    color: #cbd5e0;
+}
+
+.news-item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+}
+
+.news-item-meta {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.85rem;
+    color: #718096;
+    max-width: 60%;
+}
+
+.dark-mode .news-item-meta {
+    color: #a0aec0;
+}
+
+.news-item-meta .author {
+    font-weight: 600;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.news-item-meta .time {
+    font-size: 0.8rem;
+}
+
+.news-item-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 18px;
+    background: #3182ce;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.news-item-button:hover {
+    background: #2c5282;
+    transform: translateX(3px);
+}
+
+.dark-mode .news-item-button {
+    background: #4299e1;
+}
+
+.dark-mode .news-item-button:hover {
+    background: #3182ce;
+}
